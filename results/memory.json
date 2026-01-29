@@ -1,0 +1,38 @@
+{
+  "phi-2": {
+    "fp16": {
+      "model_size_gb": 5.18,
+      "parameters_b": 2.78,
+      "peak_vram_gb": null
+    },
+    "kv_cache_gb": {
+      "seq_512": 0.156,
+      "seq_1024": 0.312,
+      "seq_2048": 0.625
+    }
+  },
+  "gemma-2b": {
+    "fp16": {
+      "model_size_gb": 4.67,
+      "parameters_b": 2.51,
+      "peak_vram_gb": null
+    },
+    "kv_cache_gb": {
+      "seq_512": 0.009,
+      "seq_1024": 0.018,
+      "seq_2048": 0.035
+    }
+  },
+  "smollm2": {
+    "fp16": {
+      "model_size_gb": 3.19,
+      "parameters_b": 1.71,
+      "peak_vram_gb": null
+    },
+    "kv_cache_gb": {
+      "seq_512": 0.094,
+      "seq_1024": 0.188,
+      "seq_2048": 0.375
+    }
+  }
+}

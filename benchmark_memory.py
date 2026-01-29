@@ -263,10 +263,10 @@ def main():
         fp16_vram = r.get("fp16", {}).get("peak_vram_gb", "N/A")
         int4_vram = r.get("int4", {}).get("peak_vram_gb", "N/A")
 
-        fp16_size_str = f"{fp16_size}GB" if isinstance(fp16_size, (int, float)) else fp16_size
-        int4_size_str = f"{int4_size}GB" if isinstance(int4_size, (int, float)) else int4_size
-        fp16_vram_str = f"{fp16_vram}GB" if isinstance(fp16_vram, (int, float)) else fp16_vram
-        int4_vram_str = f"{int4_vram}GB" if isinstance(int4_vram, (int, float)) else int4_vram
+        fp16_size_str = f"{fp16_size}GB" if isinstance(fp16_size, (int, float)) else str(fp16_size or "N/A")
+        int4_size_str = f"{int4_size}GB" if isinstance(int4_size, (int, float)) else str(int4_size or "N/A")
+        fp16_vram_str = f"{fp16_vram}GB" if isinstance(fp16_vram, (int, float)) else str(fp16_vram or "N/A")
+        int4_vram_str = f"{int4_vram}GB" if isinstance(int4_vram, (int, float)) else str(int4_vram or "N/A")
 
         print(f"{name:<12} {fp16_size_str:>12} {int4_size_str:>12} {fp16_vram_str:>12} {int4_vram_str:>12}")
 

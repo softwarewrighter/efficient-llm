@@ -42,35 +42,45 @@ Expected benchmark results based on published research and model documentation.
 
 ### Throughput (tokens/second)
 
-| Model | CPU | GPU (FP16) | GPU (INT4) |
-|-------|-----|------------|------------|
-| Phi-2 | ~12 | ~80 | ~95 |
-| Gemma-2B | ~15 | ~85 | ~100 |
-| SmolLM2-1.7B | ~18 | ~95 | ~110 |
+| Model | CPU (Actual) | GPU (FP16) | GPU (INT4) |
+|-------|--------------|------------|------------|
+| Phi-2 | **7.1** | ~80 | ~95 |
+| Gemma-2B | **8.5** | ~85 | ~100 |
+| SmolLM2-1.7B | **3.7** | ~95 | ~110 |
 
-**Winner: SmolLM2** - Smallest model, fastest inference.
+**Actual CPU Results:** Gemma-2B achieved the highest CPU throughput at 8.5 tokens/sec, followed by Phi-2 at 7.1 tokens/sec. SmolLM2 was slower than expected at 3.7 tokens/sec on CPU.
 
 ### First Token Latency
 
-| Model | CPU | GPU |
-|-------|-----|-----|
-| Phi-2 | ~450ms | ~120ms |
-| Gemma-2B | ~400ms | ~100ms |
-| SmolLM2-1.7B | ~350ms | ~80ms |
+| Model | CPU (Actual) | GPU |
+|-------|--------------|-----|
+| Phi-2 | **430ms** | ~120ms |
+| Gemma-2B | **321ms** | ~100ms |
+| SmolLM2-1.7B | **257ms** | ~80ms |
 
-**Winner: SmolLM2** - Lower latency for interactive applications.
+**Actual CPU Results:** SmolLM2 has the lowest first-token latency at 257ms, followed by Gemma-2B at 321ms, and Phi-2 at 430ms.
 
 ## Memory Benchmarks
 
-### Model Size
+### Model Size (Actual Measurements)
 
-| Model | Parameters | FP16 | INT4 (est.) |
-|-------|------------|------|-------------|
-| Phi-2 | 2.78B | 5.18GB | ~1.7GB |
-| Gemma-2B | 2.51B | 4.67GB | ~1.5GB |
-| SmolLM2-1.7B | 1.71B | 3.19GB | ~1.1GB |
+| Model | Parameters | FP16 (Actual) | INT4 (est.) |
+|-------|------------|---------------|-------------|
+| Phi-2 | **2.78B** | **5.18GB** | ~1.7GB |
+| Gemma-2B | **2.51B** | **4.67GB** | ~1.5GB |
+| SmolLM2-1.7B | **1.71B** | **3.19GB** | ~1.1GB |
 
 **Winner: SmolLM2** - Smallest footprint, ideal for edge deployment.
+
+### KV Cache Memory (Actual Measurements)
+
+| Model | 512 tokens | 1024 tokens | 2048 tokens |
+|-------|------------|-------------|-------------|
+| Phi-2 | 0.156GB | 0.312GB | 0.625GB |
+| Gemma-2B | 0.009GB | 0.018GB | 0.035GB |
+| SmolLM2-1.7B | 0.094GB | 0.188GB | 0.375GB |
+
+**Winner: Gemma-2B** - Uses MQA (Multi-Query Attention) for minimal KV cache overhead.
 
 ### Peak VRAM During Inference
 

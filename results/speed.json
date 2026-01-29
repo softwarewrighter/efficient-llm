@@ -1,0 +1,20 @@
+{
+  "phi-2": {
+    "cpu": {
+      "first_token_ms": 430.42968320660293,
+      "tokens_per_sec": 7.068197817183408
+    }
+  },
+  "gemma-2b": {
+    "cpu": {
+      "first_token_ms": 321.2595000048168,
+      "tokens_per_sec": 8.48248217247729
+    }
+  },
+  "smollm2": {
+    "cpu": {
+      "first_token_ms": 256.76791679579765,
+      "tokens_per_sec": 3.7344228049169863
+    }
+  }
+}

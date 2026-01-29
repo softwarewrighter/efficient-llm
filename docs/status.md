@@ -126,8 +126,14 @@ python demo_chat.py
 
 ## Known Issues
 
-- **Gemma-2B requires authentication**: Run `huggingface-cli login` and accept the license at https://huggingface.co/google/gemma-2b-it
+- **Gemma-2B requires HuggingFace authentication**:
+  1. Create an account at https://huggingface.co
+  2. Generate an access token at https://huggingface.co/settings/tokens
+  3. Accept the Gemma license at https://huggingface.co/google/gemma-2b-it
+  4. Run `huggingface-cli login` and enter your token
+  - Phi-2 and SmolLM2 work without authentication
 - **Transformers 5.x compatibility**: Fixed Phi-2 loading issue with missing `pad_token_id` in config
+- **INT4 quantization requires CUDA**: bitsandbytes INT4 quantization only works on NVIDIA GPUs, not MPS (Apple Silicon) or CPU
 
 ## Change Log
 

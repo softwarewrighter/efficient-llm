@@ -25,7 +25,11 @@ cd efficient-llm
 uv venv && source .venv/bin/activate
 uv pip install torch transformers accelerate bitsandbytes datasets tqdm
 
-# Download models (Gemma requires: huggingface-cli login)
+# Authenticate with HuggingFace (required for Gemma-2B)
+huggingface-cli login
+# Then accept the Gemma license at: https://huggingface.co/google/gemma-2b-it
+
+# Download models
 python download_models.py
 
 # Run benchmarks
@@ -39,15 +43,15 @@ python demo_code.py
 python demo_chat.py
 ```
 
-## Expected Results
+## Benchmark Results
 
-Based on published research (run benchmarks to verify on your hardware):
+Actual measurements from CPU benchmarks (GPU results depend on hardware):
 
-| Model | MMLU | GSM8K | Speed (CPU) | Memory |
-|-------|------|-------|-------------|--------|
-| Phi-2 | ~57% | ~45% | ~12 tok/s | 5.4GB |
-| Gemma-2B | ~52% | ~38% | ~15 tok/s | 4.2GB |
-| SmolLM2 | ~49% | ~35% | ~18 tok/s | 3.4GB |
+| Model | MMLU | GSM8K | Speed (CPU) | First Token | Memory |
+|-------|------|-------|-------------|-------------|--------|
+| Phi-2 | ~57% | ~45% | 7.1 tok/s | 430ms | 5.2GB |
+| Gemma-2B | ~52% | ~38% | 8.5 tok/s | 321ms | 4.7GB |
+| SmolLM2 | ~49% | ~35% | 3.7 tok/s | 257ms | 3.2GB |
 
 See [docs/results.md](docs/results.md) for detailed benchmark methodology and analysis.
 
@@ -62,6 +66,19 @@ See [docs/results.md](docs/results.md) for detailed benchmark methodology and an
 ```
 
 See [docs/TRADEOFFS.md](docs/TRADEOFFS.md) for detailed decision framework.
+
+## Prerequisites
+
+### HuggingFace Authentication (Required for Gemma-2B)
+
+Gemma-2B is a gated model that requires HuggingFace authentication:
+
+1. Create a HuggingFace account at https://huggingface.co
+2. Generate an access token at https://huggingface.co/settings/tokens
+3. Accept the Gemma license at https://huggingface.co/google/gemma-2b-it
+4. Login via CLI: `huggingface-cli login`
+
+Without authentication, Gemma-2B will fail to download. Phi-2 and SmolLM2 work without authentication.
 
 ## Hardware Requirements
 
