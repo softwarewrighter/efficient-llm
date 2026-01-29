@@ -64,11 +64,11 @@ Expected benchmark results based on published research and model documentation.
 
 ### Model Size
 
-| Model | FP16 | INT4 | Reduction |
-|-------|------|------|-----------|
-| Phi-2 | 5.4GB | 1.8GB | 3.0x |
-| Gemma-2B | 4.2GB | 1.4GB | 3.0x |
-| SmolLM2-1.7B | 3.4GB | 1.1GB | 3.1x |
+| Model | Parameters | FP16 | INT4 (est.) |
+|-------|------------|------|-------------|
+| Phi-2 | 2.78B | 5.18GB | ~1.7GB |
+| Gemma-2B | 2.51B | 4.67GB | ~1.5GB |
+| SmolLM2-1.7B | 1.71B | 3.19GB | ~1.1GB |
 
 **Winner: SmolLM2** - Smallest footprint, ideal for edge deployment.
 

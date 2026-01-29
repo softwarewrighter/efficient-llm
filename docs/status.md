@@ -140,5 +140,5 @@ python demo_chat.py
 | 2026-01-29 | Phase 7: All documentation complete |
 | 2026-01-29 | Project implementation complete |
 | 2026-01-29 | Fixed Phi-2 loading (transformers 5.x pad_token_id fix) |
-| 2026-01-29 | Tested Phi-2 and SmolLM2 model loading and inference |
+| 2026-01-29 | Tested all 3 models: Phi-2, Gemma-2B, SmolLM2 |
 | 2026-01-29 | Updated README with documentation links |
