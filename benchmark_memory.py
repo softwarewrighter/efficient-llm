@@ -7,7 +7,15 @@ from pathlib import Path
 
 import torch
 from tqdm import tqdm
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+
+
+def _get_config(model_id: str):
+    """Load config with pad_token_id fix for Phi-2."""
+    config = AutoConfig.from_pretrained(model_id, trust_remote_code=True)
+    if not hasattr(config, "pad_token_id") or config.pad_token_id is None:
+        config.pad_token_id = getattr(config, "eos_token_id", 0)
+    return config
 
 MODELS = {
     "phi-2": "microsoft/phi-2",
@@ -64,6 +72,7 @@ def measure_peak_memory_cuda(model, tokenizer, prompt: str, max_tokens: int = 10
 
 def measure_fp16(model_id: str, device: torch.device) -> dict:
     """Measure FP16 model characteristics."""
+    config = _get_config(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
@@ -74,6 +83,7 @@ def measure_fp16(model_id: str, device: torch.device) -> dict:
 
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
+        config=config,
         trust_remote_code=True,
         torch_dtype=torch.float16,
         device_map="auto" if device.type == "cuda" else None,
@@ -111,6 +121,7 @@ def measure_int4(model_id: str) -> dict:
     if not torch.cuda.is_available():
         return {"error": "INT4 quantization requires CUDA"}
 
+    config = _get_config(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
@@ -127,6 +138,7 @@ def measure_int4(model_id: str) -> dict:
 
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
+        config=config,
         trust_remote_code=True,
         quantization_config=quantization_config,
         device_map="auto",
@@ -159,17 +171,17 @@ def measure_kv_cache_size(model_id: str, seq_lengths: list = None) -> dict:
     if seq_lengths is None:
         seq_lengths = [512, 1024, 2048]
 
+    config = _get_config(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
 
     # Get model config for KV cache calculation
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
+        config=config,
         trust_remote_code=True,
         torch_dtype=torch.float16,
         low_cpu_mem_usage=True,
     )
-
-    config = model.config
     num_layers = getattr(config, "num_hidden_layers", 32)
     num_heads = getattr(config, "num_key_value_heads", getattr(config, "num_attention_heads", 32))
     head_dim = getattr(config, "head_dim", config.hidden_size // config.num_attention_heads)

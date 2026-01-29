@@ -124,6 +124,11 @@ python demo_code.py
 python demo_chat.py
 ```
 
+## Known Issues
+
+- **Gemma-2B requires authentication**: Run `huggingface-cli login` and accept the license at https://huggingface.co/google/gemma-2b-it
+- **Transformers 5.x compatibility**: Fixed Phi-2 loading issue with missing `pad_token_id` in config
+
 ## Change Log
 
 | Date | Change |
@@ -134,3 +139,6 @@ python demo_chat.py
 | 2026-01-29 | Phase 6: All demo scripts complete |
 | 2026-01-29 | Phase 7: All documentation complete |
 | 2026-01-29 | Project implementation complete |
+| 2026-01-29 | Fixed Phi-2 loading (transformers 5.x pad_token_id fix) |
+| 2026-01-29 | Tested Phi-2 and SmolLM2 model loading and inference |
+| 2026-01-29 | Updated README with documentation links |

@@ -9,7 +9,7 @@ from pathlib import Path
 import torch
 from datasets import load_dataset
 from tqdm import tqdm
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
 
 MODELS = {
     "phi-2": "microsoft/phi-2",
@@ -44,12 +44,18 @@ def get_device():
 
 def load_model_and_tokenizer(model_id: str, device: torch.device):
     """Load model and tokenizer."""
+    # Load config first and fix missing pad_token_id (needed for Phi-2 on transformers 5.x)
+    config = AutoConfig.from_pretrained(model_id, trust_remote_code=True)
+    if not hasattr(config, "pad_token_id") or config.pad_token_id is None:
+        config.pad_token_id = getattr(config, "eos_token_id", 0)
+
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
+        config=config,
         trust_remote_code=True,
         torch_dtype=torch.float16 if device.type != "cpu" else torch.float32,
         low_cpu_mem_usage=True,

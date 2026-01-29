@@ -5,13 +5,16 @@ import sys
 from pathlib import Path
 
 from tqdm import tqdm
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
 
 MODELS = {
     "phi-2": "microsoft/phi-2",
-    "gemma-2b": "google/gemma-2b-it",
+    "gemma-2b": "google/gemma-2b-it",  # Requires HuggingFace login
     "smollm2": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
 }
+
+# Models that require authentication
+GATED_MODELS = {"gemma-2b"}
 
 
 def get_model_size_gb(model) -> float:
@@ -24,24 +27,36 @@ def download_model(name: str, model_id: str) -> dict:
     """Download model and tokenizer, return metadata."""
     print(f"\nDownloading {name} ({model_id})...")
 
+    # Load config first and fix missing pad_token_id (needed for Phi-2 on transformers 5.x)
+    config = AutoConfig.from_pretrained(model_id, trust_remote_code=True)
+    if not hasattr(config, "pad_token_id") or config.pad_token_id is None:
+        config.pad_token_id = getattr(config, "eos_token_id", 0)
+
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
 
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
+        config=config,
         trust_remote_code=True,
-        torch_dtype="auto",
         low_cpu_mem_usage=True,
     )
 
     size_gb = get_model_size_gb(model)
     num_params = sum(p.numel() for p in model.parameters()) / 1e9
 
+    # Safely get max context length
+    max_len = getattr(model.config, "max_position_embeddings", None)
+    if max_len is None:
+        max_len = getattr(model.config, "n_positions", "unknown")
+
     return {
         "model_id": model_id,
         "parameters_b": round(num_params, 2),
         "size_gb": round(size_gb, 2),
         "vocab_size": tokenizer.vocab_size,
-        "max_length": getattr(model.config, "max_position_embeddings", "unknown"),
+        "max_length": max_len,
     }
 
 

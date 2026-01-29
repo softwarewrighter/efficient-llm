@@ -2,7 +2,9 @@
 
 Expected benchmark results based on published research and model documentation.
 
-> **Note:** These are projected values. Run the benchmark scripts to generate actual measurements on your hardware.
+> **Note:** These are projected values based on published research. Run the benchmark scripts to generate actual measurements on your hardware.
+
+> **Gemma-2B requires HuggingFace authentication.** Run `huggingface-cli login` and accept the model license at https://huggingface.co/google/gemma-2b-it before using Gemma.
 
 ## Quality Benchmarks
 

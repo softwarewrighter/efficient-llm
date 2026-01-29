@@ -8,7 +8,7 @@ from pathlib import Path
 
 import torch
 from tqdm import tqdm
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
 MODELS = {
     "phi-2": "microsoft/phi-2",
@@ -38,14 +38,24 @@ def get_device():
     return torch.device("cpu")
 
 
+def _get_config(model_id: str):
+    """Load config with pad_token_id fix for Phi-2."""
+    config = AutoConfig.from_pretrained(model_id, trust_remote_code=True)
+    if not hasattr(config, "pad_token_id") or config.pad_token_id is None:
+        config.pad_token_id = getattr(config, "eos_token_id", 0)
+    return config
+
+
 def load_model_cpu(model_id: str):
     """Load model for CPU inference."""
+    config = _get_config(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
+        config=config,
         trust_remote_code=True,
         torch_dtype=torch.float32,
         low_cpu_mem_usage=True,
@@ -56,12 +66,14 @@ def load_model_cpu(model_id: str):
 
 def load_model_gpu(model_id: str):
     """Load model for GPU inference."""
+    config = _get_config(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
+        config=config,
         trust_remote_code=True,
         torch_dtype=torch.float16,
         device_map="auto",
@@ -73,6 +85,7 @@ def load_model_gpu(model_id: str):
 
 def load_model_int4(model_id: str):
     """Load model with INT4 quantization."""
+    config = _get_config(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
@@ -86,6 +99,7 @@ def load_model_int4(model_id: str):
 
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
+        config=config,
         trust_remote_code=True,
         quantization_config=quantization_config,
         device_map="auto",
