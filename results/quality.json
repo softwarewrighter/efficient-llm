@@ -1,0 +1,194 @@
+{
+  "phi-2": {
+    "mmlu": {
+      "categories": {
+        "abstract_algebra": {
+          "accuracy": 0.45,
+          "correct": 9,
+          "total": 20
+        },
+        "anatomy": {
+          "accuracy": 0.4,
+          "correct": 8,
+          "total": 20
+        },
+        "astronomy": {
+          "accuracy": 0.75,
+          "correct": 15,
+          "total": 20
+        },
+        "business_ethics": {
+          "accuracy": 0.8,
+          "correct": 16,
+          "total": 20
+        },
+        "clinical_knowledge": {
+          "accuracy": 0.65,
+          "correct": 13,
+          "total": 20
+        },
+        "college_biology": {
+          "accuracy": 0.75,
+          "correct": 15,
+          "total": 20
+        },
+        "college_chemistry": {
+          "accuracy": 0.45,
+          "correct": 9,
+          "total": 20
+        },
+        "computer_security": {
+          "accuracy": 0.6,
+          "correct": 12,
+          "total": 20
+        },
+        "conceptual_physics": {
+          "accuracy": 0.7,
+          "correct": 14,
+          "total": 20
+        }
+      },
+      "correct": 111,
+      "total": 180,
+      "overall": 0.6166666666666667
+    },
+    "gsm8k": {
+      "accuracy": 0.57,
+      "correct": 57,
+      "total": 100
+    },
+    "humaneval": {
+      "pass_at_1": 0.5,
+      "correct": 5,
+      "total": 10
+    }
+  },
+  "gemma-2b": {
+    "mmlu": {
+      "categories": {
+        "abstract_algebra": {
+          "accuracy": 0.45,
+          "correct": 9,
+          "total": 20
+        },
+        "anatomy": {
+          "accuracy": 0.25,
+          "correct": 5,
+          "total": 20
+        },
+        "astronomy": {
+          "accuracy": 0.4,
+          "correct": 8,
+          "total": 20
+        },
+        "business_ethics": {
+          "accuracy": 0.55,
+          "correct": 11,
+          "total": 20
+        },
+        "clinical_knowledge": {
+          "accuracy": 0.35,
+          "correct": 7,
+          "total": 20
+        },
+        "college_biology": {
+          "accuracy": 0.4,
+          "correct": 8,
+          "total": 20
+        },
+        "college_chemistry": {
+          "accuracy": 0.2,
+          "correct": 4,
+          "total": 20
+        },
+        "computer_security": {
+          "accuracy": 0.45,
+          "correct": 9,
+          "total": 20
+        },
+        "conceptual_physics": {
+          "accuracy": 0.45,
+          "correct": 9,
+          "total": 20
+        }
+      },
+      "correct": 70,
+      "total": 180,
+      "overall": 0.3888888888888889
+    },
+    "gsm8k": {
+      "accuracy": 0.18,
+      "correct": 18,
+      "total": 100
+    },
+    "humaneval": {
+      "pass_at_1": 0.9,
+      "correct": 9,
+      "total": 10
+    }
+  },
+  "smollm2": {
+    "mmlu": {
+      "categories": {
+        "abstract_algebra": {
+          "accuracy": 0.45,
+          "correct": 9,
+          "total": 20
+        },
+        "anatomy": {
+          "accuracy": 0.4,
+          "correct": 8,
+          "total": 20
+        },
+        "astronomy": {
+          "accuracy": 0.8,
+          "correct": 16,
+          "total": 20
+        },
+        "business_ethics": {
+          "accuracy": 0.65,
+          "correct": 13,
+          "total": 20
+        },
+        "clinical_knowledge": {
+          "accuracy": 0.5,
+          "correct": 10,
+          "total": 20
+        },
+        "college_biology": {
+          "accuracy": 0.6,
+          "correct": 12,
+          "total": 20
+        },
+        "college_chemistry": {
+          "accuracy": 0.4,
+          "correct": 8,
+          "total": 20
+        },
+        "computer_security": {
+          "accuracy": 0.6,
+          "correct": 12,
+          "total": 20
+        },
+        "conceptual_physics": {
+          "accuracy": 0.6,
+          "correct": 12,
+          "total": 20
+        }
+      },
+      "correct": 100,
+      "total": 180,
+      "overall": 0.5555555555555556
+    },
+    "gsm8k": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 100
+    },
+    "humaneval": {
+      "pass_at_1": 0.0,
+      "correct": 0,
+      "total": 10
+    }
+  }
+}

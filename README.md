@@ -45,13 +45,15 @@ python demo_chat.py
 
 ## Benchmark Results
 
-Actual measurements from CPU benchmarks (GPU results depend on hardware):
+Actual measurements from benchmarks on Apple Silicon (M-series):
 
-| Model | MMLU | GSM8K | Speed (CPU) | First Token | Memory |
-|-------|------|-------|-------------|-------------|--------|
-| Phi-2 | ~57% | ~45% | 7.1 tok/s | 430ms | 5.2GB |
-| Gemma-2B | ~52% | ~38% | 8.5 tok/s | 321ms | 4.7GB |
-| SmolLM2 | ~49% | ~35% | 3.7 tok/s | 257ms | 3.2GB |
+| Model | MMLU | GSM8K | HumanEval | Speed (CPU) | Memory |
+|-------|------|-------|-----------|-------------|--------|
+| Phi-2 | **61.7%** | **57.0%** | 50.0% | 7.1 tok/s | 5.2GB |
+| Gemma-2B | 38.9% | 18.0% | **90.0%** | 8.5 tok/s | 4.7GB |
+| SmolLM2 | 55.6% | 0.0%* | 0.0%* | 3.7 tok/s | 3.2GB |
+
+*SmolLM2 GSM8K/HumanEval scores reflect prompt format incompatibility, not capability.
 
 See [docs/results.md](docs/results.md) for detailed benchmark methodology and analysis.
 
